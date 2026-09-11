@@ -35,5 +35,4 @@ jobs:
           gh release create "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json \
             --title "Release ${TAG}" \
             --notes-file dist/release_notes.md \
-            --latest \
-            --clobber
+            --latest || gh release upload "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json --clobber
