@@ -277,20 +277,38 @@ async function buildDatabase() {
     console.log('Writing formatted JSON...');
     await fs.writeFile(fullPath, JSON.stringify(resultObj, null, 2), 'utf8');
 
-    // Stats breakdown
-    let malCount = 0, anilistCount = 0, kitsuCount = 0, anidbCount = 0;
-    let imdbCount = 0, tmdbCount = 0, tvdbCount = 0, simklCount = 0;
+    // Stats breakdown across all 13 platforms
+    const stats = {
+      mal: 0,
+      anilist: 0,
+      kitsu: 0,
+      anidb: 0,
+      imdb: 0,
+      tmdb: 0,
+      tvdb: 0,
+      simkl: 0,
+      animePlanet: 0,
+      anisearch: 0,
+      livechart: 0,
+      ann: 0,
+      animeCountdown: 0
+    };
 
     for (const item of dataset) {
       for (const s of (item.sources || [])) {
-        if (s.includes('myanimelist.net')) malCount++;
-        if (s.includes('anilist.co')) anilistCount++;
-        if (s.includes('kitsu.app')) kitsuCount++;
-        if (s.includes('anidb.net')) anidbCount++;
-        if (s.includes('imdb.com')) imdbCount++;
-        if (s.includes('themoviedb.org')) tmdbCount++;
-        if (s.includes('thetvdb.com')) tvdbCount++;
-        if (s.includes('simkl.com')) simklCount++;
+        if (s.includes('myanimelist.net')) stats.mal++;
+        if (s.includes('anilist.co')) stats.anilist++;
+        if (s.includes('kitsu.app')) stats.kitsu++;
+        if (s.includes('anidb.net')) stats.anidb++;
+        if (s.includes('imdb.com')) stats.imdb++;
+        if (s.includes('themoviedb.org')) stats.tmdb++;
+        if (s.includes('thetvdb.com')) stats.tvdb++;
+        if (s.includes('simkl.com')) stats.simkl++;
+        if (s.includes('anime-planet.com')) stats.animePlanet++;
+        if (s.includes('anisearch.com')) stats.anisearch++;
+        if (s.includes('livechart.me')) stats.livechart++;
+        if (s.includes('animenewsnetwork.com')) stats.ann++;
+        if (s.includes('animecountdown.com')) stats.animeCountdown++;
       }
     }
 
@@ -301,14 +319,19 @@ async function buildDatabase() {
       '',
       '### 📊 Dataset Statistics',
       `- **Total Anime Entries**: \`${dataset.length.toLocaleString()}\``,
-      `- **MyAnimeList Links**: \`${malCount.toLocaleString()}\``,
-      `- **AniList Links**: \`${anilistCount.toLocaleString()}\``,
-      `- **Kitsu Links**: \`${kitsuCount.toLocaleString()}\``,
-      `- **AniDB Links**: \`${anidbCount.toLocaleString()}\``,
-      `- **IMDb Links**: \`${imdbCount.toLocaleString()}\``,
-      `- **TheMovieDB (TMDb) Links**: \`${tmdbCount.toLocaleString()}\``,
-      `- **TheTVDB Links**: \`${tvdbCount.toLocaleString()}\``,
-      `- **Simkl Links**: \`${simklCount.toLocaleString()}\``,
+      `- **MyAnimeList Links**: \`${stats.mal.toLocaleString()}\``,
+      `- **AniList Links**: \`${stats.anilist.toLocaleString()}\``,
+      `- **Kitsu Links**: \`${stats.kitsu.toLocaleString()}\``,
+      `- **AniDB Links**: \`${stats.anidb.toLocaleString()}\``,
+      `- **IMDb Links**: \`${stats.imdb.toLocaleString()}\``,
+      `- **TheMovieDB (TMDb) Links**: \`${stats.tmdb.toLocaleString()}\``,
+      `- **TheTVDB Links**: \`${stats.tvdb.toLocaleString()}\``,
+      `- **Simkl Links**: \`${stats.simkl.toLocaleString()}\``,
+      `- **Anime-Planet Links**: \`${stats.animePlanet.toLocaleString()}\``,
+      `- **AniSearch Links**: \`${stats.anisearch.toLocaleString()}\``,
+      `- **LiveChart Links**: \`${stats.livechart.toLocaleString()}\``,
+      `- **Anime News Network Links**: \`${stats.ann.toLocaleString()}\``,
+      `- **AnimeCountdown Links**: \`${stats.animeCountdown.toLocaleString()}\``,
       `- **Newly Enriched Entries This Run**: \`${newlyEnrichedCount}\``,
       `- **Updated Source Cross-References**: \`${updatedSourcesCount}\``,
       '',

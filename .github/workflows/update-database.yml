@@ -32,7 +32,14 @@ jobs:
         run: |
           TAG=$(cat dist/tag.txt)
           echo "Publishing release ${TAG}..."
-          gh release create "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json \
-            --title "Release ${TAG}" \
-            --notes-file dist/release_notes.md \
-            --latest || gh release upload "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json --clobber
+          if gh release view "${TAG}" > /dev/null 2>&1; then
+            echo "Release ${TAG} already exists. Updating release notes and uploading assets..."
+            gh release edit "${TAG}" --notes-file dist/release_notes.md
+            gh release upload "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json --clobber
+          else
+            echo "Creating new release ${TAG}..."
+            gh release create "${TAG}" dist/anime-offline-database-minified.json dist/anime-offline-database.json \
+              --title "Release ${TAG}" \
+              --notes-file dist/release_notes.md \
+              --latest
+          fi
