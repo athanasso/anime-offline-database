@@ -4,7 +4,7 @@
 [![Automated Weekly Build](https://github.com/athanasso/anime-offline-database/actions/workflows/update-database.yml/badge.svg)](https://github.com/athanasso/anime-offline-database/actions/workflows/update-database.yml)
 [![Latest Release](https://img.shields.io/github/v/release/athanasso/anime-offline-database?label=latest%20release&color=blue)](https://github.com/athanasso/anime-offline-database/releases/latest)
 
-An automated, open-source dataset containing anime metadata cross-referenced across major anime platforms: **MyAnimeList**, **AniList**, **Kitsu**, **AniDB**, **Anime-Planet**, **AniSearch**, and **LiveChart**.
+An automated, open-source dataset containing anime metadata cross-referenced across **13 major anime and media platforms**: **MyAnimeList**, **AniList**, **Kitsu**, **AniDB**, **IMDb**, **TheMovieDB (TMDB)**, **TheTVDB**, **Anime-Planet**, **AniSearch**, **Simkl**, **Anime News Network**, **AnimeCountdown**, and **LiveChart**.
 
 This repository is an **automated, drop-in replacement** for the original `manami-project/anime-offline-database` (archived July 2026).
 

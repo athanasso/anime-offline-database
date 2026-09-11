@@ -36,7 +36,24 @@ function formatSourcesFromFribb(item) {
   if (item.kitsu_id) sources.push(`https://kitsu.app/anime/${item.kitsu_id}`);
   if (item.livechart_id) sources.push(`https://livechart.me/anime/${item.livechart_id}`);
   if (item.mal_id) sources.push(`https://myanimelist.net/anime/${item.mal_id}`);
-  return sources.sort();
+  if (item.simkl_id) sources.push(`https://simkl.com/anime/${item.simkl_id}`);
+  if (item.animenewsnetwork_id) sources.push(`https://animenewsnetwork.com/encyclopedia/anime.php?id=${item.animenewsnetwork_id}`);
+  if (item.animecountdown_id) sources.push(`https://animecountdown.com/${item.animecountdown_id}`);
+  if (item.tvdb_id) sources.push(`https://thetvdb.com/dereferrer/series/${item.tvdb_id}`);
+
+  if (item.themoviedb_id) {
+    if (item.themoviedb_id.tv) sources.push(`https://www.themoviedb.org/tv/${item.themoviedb_id.tv}`);
+    if (item.themoviedb_id.movie) sources.push(`https://www.themoviedb.org/movie/${item.themoviedb_id.movie}`);
+  }
+
+  if (item.imdb_id) {
+    const ids = Array.isArray(item.imdb_id) ? item.imdb_id : [item.imdb_id];
+    for (const id of ids) {
+      if (id) sources.push(`https://www.imdb.com/title/${id}`);
+    }
+  }
+
+  return Array.from(new Set(sources)).sort();
 }
 
 async function fetchMetadataForMalId(malId) {
@@ -262,12 +279,18 @@ async function buildDatabase() {
 
     // Stats breakdown
     let malCount = 0, anilistCount = 0, kitsuCount = 0, anidbCount = 0;
+    let imdbCount = 0, tmdbCount = 0, tvdbCount = 0, simklCount = 0;
+
     for (const item of dataset) {
       for (const s of (item.sources || [])) {
         if (s.includes('myanimelist.net')) malCount++;
         if (s.includes('anilist.co')) anilistCount++;
         if (s.includes('kitsu.app')) kitsuCount++;
         if (s.includes('anidb.net')) anidbCount++;
+        if (s.includes('imdb.com')) imdbCount++;
+        if (s.includes('themoviedb.org')) tmdbCount++;
+        if (s.includes('thetvdb.com')) tvdbCount++;
+        if (s.includes('simkl.com')) simklCount++;
       }
     }
 
@@ -282,6 +305,10 @@ async function buildDatabase() {
       `- **AniList Links**: \`${anilistCount.toLocaleString()}\``,
       `- **Kitsu Links**: \`${kitsuCount.toLocaleString()}\``,
       `- **AniDB Links**: \`${anidbCount.toLocaleString()}\``,
+      `- **IMDb Links**: \`${imdbCount.toLocaleString()}\``,
+      `- **TheMovieDB (TMDb) Links**: \`${tmdbCount.toLocaleString()}\``,
+      `- **TheTVDB Links**: \`${tvdbCount.toLocaleString()}\``,
+      `- **Simkl Links**: \`${simklCount.toLocaleString()}\``,
       `- **Newly Enriched Entries This Run**: \`${newlyEnrichedCount}\``,
       `- **Updated Source Cross-References**: \`${updatedSourcesCount}\``,
       '',
