@@ -1,0 +1,15 @@
+{
+  "name": "anime-offline-database",
+  "version": "1.0.0",
+  "description": "Automated open-source anime database with cross-references across MAL, AniList, Kitsu, AniDB, and more.",
+  "main": "build_database.js",
+  "scripts": {
+    "build": "node build_database.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/athanasso/anime-offline-database.git"
+  },
+  "author": "athanasso",
+  "license": "ODbL-1.0"
+}
