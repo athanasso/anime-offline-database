@@ -128,7 +128,7 @@ async function buildDatabase() {
     let relRes = await fetch(`https://api.github.com/repos/${currentRepo}/releases/latest`, { headers: ghHeaders });
     if (!relRes.ok) {
       console.log(`No previous release on ${currentRepo}. Bootstrapping from upstream fallback...`);
-      relRes = await fetch(FALLBACK_RELEASE_URL, { headers: ghHeaders });
+      relRes = await fetch(FALLBACK_RELEASE_URL, { headers: { 'User-Agent': 'anime-offline-database-builder' } });
     }
     if (!relRes.ok) throw new Error('Failed to fetch release metadata: HTTP ' + relRes.status);
     const relData = await relRes.json();

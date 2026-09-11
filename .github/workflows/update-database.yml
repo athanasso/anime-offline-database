@@ -28,6 +28,7 @@ jobs:
       - name: Create or Update GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=$(cat dist/tag.txt)
           echo "Publishing release ${TAG}..."
@@ -35,4 +36,4 @@ jobs:
             --title "Release ${TAG}" \
             --notes-file dist/release_notes.md \
             --latest \
-            --clobber || echo "Release creation completed."
+            --clobber
